@@ -49,7 +49,7 @@ pub fn date_parser(date: &str) -> String {
     date.push('/');
     
     // Append the year
-    date.push_str();
+    date.push_str(year);
 
     date
 }
@@ -61,6 +61,6 @@ mod tests {
 
     #[test]
     fn it_works() {
-        assert_eq!(date_parser("4th of January 2018"), "01/4/".to_string());
+        assert_eq!(date_parser("4th of January 2018"), "01/4/2018".to_string());
     }
 }
