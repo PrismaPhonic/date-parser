@@ -44,8 +44,10 @@ pub fn date_parser(date: &str) -> String {
     date.push('/');
 
     // Append the day
-    let dig = Regex::new(r"^\d+").unwrap();
-    date.push_str(dig.find(day).unwrap().as_str());
+    let digit = Regex::new(r"^\d+").unwrap();
+    let mut day_num = String::from(digit.find(day).unwrap().as_str());
+    if day_num.len() < 2 { day_num = format!("0{}", day_num)  };
+    date.push_str(&day_num);
     date.push('/');
     
     // Append the year
@@ -61,6 +63,6 @@ mod tests {
 
     #[test]
     fn it_works() {
-        assert_eq!(date_parser("4th of January 2018"), "01/4/2018".to_string());
+        assert_eq!(date_parser("4th of January 2018"), "01/04/2018".to_string());
     }
 }
