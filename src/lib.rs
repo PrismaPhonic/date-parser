@@ -3,7 +3,10 @@
 /// 2nd of March 2006
 /// 3rd of November 1975
 
+extern crate regex;
+
 use std::collections::HashMap;
+use regex::Regex;
 
 fn months_map() -> HashMap<&'static str, &'static str> {
     let mut months = HashMap::new();
@@ -35,7 +38,18 @@ pub fn date_parser(date: &str) -> String {
     let months = months_map();
 
     let mut date = String::new();
+
+    // Append the month
     date.push_str(months.get(month).unwrap());
+    date.push('/');
+
+    // Append the day
+    let dig = Regex::new(r"^\d+").unwrap();
+    date.push_str(dig.find(day).unwrap().as_str());
+    date.push('/');
+    
+    // Append the year
+    date.push_str();
 
     date
 }
@@ -47,6 +61,6 @@ mod tests {
 
     #[test]
     fn it_works() {
-        assert_eq!(date_parser("4th of January 2018"), "01".to_string());
+        assert_eq!(date_parser("4th of January 2018"), "01/4/".to_string());
     }
 }
